@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace DogWalkApp.Data.Migrations
+namespace DogWalkApp.Infrastructure.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

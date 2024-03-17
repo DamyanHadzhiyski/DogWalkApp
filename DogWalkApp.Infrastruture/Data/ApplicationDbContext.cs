@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DogWalkApp.Data
+namespace DogWalkApp.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
