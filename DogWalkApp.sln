@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkApp", "DogWalkApp\DogWalkApp.csproj", "{6D219E6A-1601-4445-845F-2DBE0747972B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogWalkApp", "DogWalkApp\DogWalkApp.csproj", "{6D219E6A-1601-4445-845F-2DBE0747972B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWalkApp.Infrastruture", "DogWalkApp.Infrastruture\DogWalkApp.Infrastruture.csproj", "{7018BD08-835F-4728-870A-D369CFCE16B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DogWalkApp.Infrastructure", "DogWalkApp.Infrastruture\DogWalkApp.Infrastructure.csproj", "{7018BD08-835F-4728-870A-D369CFCE16B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
