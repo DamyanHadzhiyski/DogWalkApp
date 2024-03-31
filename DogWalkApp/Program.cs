@@ -1,4 +1,4 @@
-using DogWalkApp.Data;
+using DogWalkApp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
