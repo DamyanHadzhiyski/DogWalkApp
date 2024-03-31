@@ -33,8 +33,11 @@ namespace DogWalkApp.Infrastructure.Data.Models
         public Sex Sex { get; set; }
 
         [Required]
-        [Comment("Dog's weight in accepted ranges")]
-        public WeightLimit Weight { get; set; }
+        [Comment("Dog's weight range primary identifier")]
+        public int WeightRangeId {  get; set; }
+
+        [ForeignKey(nameof(WeightRangeId))]
+        public WeightRange Weight { get; set; } = null!;
 
         [Comment("Special needs of the dog")]
         public string SpecialNotes { get; set; } = string.Empty;
