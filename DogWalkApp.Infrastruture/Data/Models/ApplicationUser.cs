@@ -29,7 +29,5 @@ namespace DogWalkApp.Infrastructure.Data.Models
         [MaxLength(UserDistrictMaxLength)]
         [Comment("User's city district")]
         public string District { get; set; } = string.Empty;
-
-        public IEnumerable<Dog> Dogs { get; set; } = new List<Dog>();
     }
 }

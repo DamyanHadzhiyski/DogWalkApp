@@ -44,9 +44,9 @@ namespace DogWalkApp.Infrastructure.Data.Models
 
         [Required]
         [Comment("Dog's owner primary identifier")]
-        public string OwnerId { get; set; } = string.Empty;
+        public int OwnerId { get; set; }
 
         [ForeignKey(nameof(OwnerId))]
-        public IdentityUser Owner { get; set; } = null!;
+        public DogOwner Owner { get; set; } = null!;
     }
 }
