@@ -17,7 +17,7 @@ namespace DogWalkApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -140,9 +140,6 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2")
                         .HasComment("Dog's birth date");
@@ -178,8 +175,6 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("OwnerId");
 
                     b.HasIndex("WeightRangeId");
@@ -187,7 +182,7 @@ namespace DogWalkApp.Infrastructure.Migrations
                     b.ToTable("Dogs");
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogOwner", b =>
+            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Owner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,10 +200,10 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DogOwners");
+                    b.ToTable("Owners");
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogWalker", b =>
+            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Walker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,8 +212,9 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("MaxDogsToWalk")
-                        .HasColumnType("int");
+                    b.Property<int>("MaxNumberOfDogs")
+                        .HasColumnType("int")
+                        .HasComment("Maximum number of dogs that the walker can handle");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -229,7 +225,7 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DogWalkers");
+                    b.ToTable("Walkers");
                 });
 
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.WeightRange", b =>
@@ -245,12 +241,12 @@ namespace DogWalkApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DogWalkerId")
+                    b.Property<int?>("WalkerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DogWalkerId");
+                    b.HasIndex("WalkerId");
 
                     b.ToTable("WeightRanges");
                 });
@@ -405,14 +401,10 @@ namespace DogWalkApp.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Dog", b =>
                 {
-                    b.HasOne("DogWalkApp.Infrastructure.Data.Models.ApplicationUser", null)
-                        .WithMany("Dogs")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("DogWalkApp.Infrastructure.Data.Models.DogOwner", "Owner")
+                    b.HasOne("DogWalkApp.Infrastructure.Data.Models.Owner", "Owner")
                         .WithMany("Dogs")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DogWalkApp.Infrastructure.Data.Models.WeightRange", "Weight")
@@ -426,7 +418,7 @@ namespace DogWalkApp.Infrastructure.Migrations
                     b.Navigation("Weight");
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogOwner", b =>
+            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Owner", b =>
                 {
                     b.HasOne("DogWalkApp.Infrastructure.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -437,7 +429,7 @@ namespace DogWalkApp.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogWalker", b =>
+            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Walker", b =>
                 {
                     b.HasOne("DogWalkApp.Infrastructure.Data.Models.ApplicationUser", "User")
                         .WithMany()
@@ -450,9 +442,9 @@ namespace DogWalkApp.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.WeightRange", b =>
                 {
-                    b.HasOne("DogWalkApp.Infrastructure.Data.Models.DogWalker", null)
-                        .WithMany("AcceptableWeightRanges")
-                        .HasForeignKey("DogWalkerId");
+                    b.HasOne("DogWalkApp.Infrastructure.Data.Models.Walker", null)
+                        .WithMany("WeightRangesLimits")
+                        .HasForeignKey("WalkerId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -506,19 +498,14 @@ namespace DogWalkApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Owner", b =>
                 {
                     b.Navigation("Dogs");
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogOwner", b =>
+            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Walker", b =>
                 {
-                    b.Navigation("Dogs");
-                });
-
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogWalker", b =>
-                {
-                    b.Navigation("AcceptableWeightRanges");
+                    b.Navigation("WeightRangesLimits");
                 });
 #pragma warning restore 612, 618
         }

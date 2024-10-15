@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DogWalkApp.Infrastructure.Data.Models
 {
-    public class DogOwner
+    public class Owner
     {
         [Key]
         [Comment("Primary identifier of the dog owner")]
