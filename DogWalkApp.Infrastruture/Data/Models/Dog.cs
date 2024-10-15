@@ -47,6 +47,6 @@ namespace DogWalkApp.Infrastructure.Data.Models
         public int OwnerId { get; set; }
 
         [ForeignKey(nameof(OwnerId))]
-        public DogOwner Owner { get; set; } = null!;
+        public Owner Owner { get; set; } = null!;
     }
 }

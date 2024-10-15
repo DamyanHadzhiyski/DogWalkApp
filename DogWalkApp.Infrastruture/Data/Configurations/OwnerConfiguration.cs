@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DogWalkApp.Infrastructure.Data.Configurations
 {
-    public class DogOwnerConfiguration : IEntityTypeConfiguration<DogOwner>
+    public class OwnerConfiguration : IEntityTypeConfiguration<Owner>
     {
-        public void Configure(EntityTypeBuilder<DogOwner> builder)
+        public void Configure(EntityTypeBuilder<Owner> builder)
         {
             builder
                 .HasMany(o => o.Dogs)

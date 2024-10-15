@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DogWalkApp.Infrastructure.Data.Configurations
 {
-    public class DogWalkerConfiguration : IEntityTypeConfiguration<DogWalker>
+    public class WalkerConfiguration : IEntityTypeConfiguration<Walker>
     {
-        public void Configure(EntityTypeBuilder<DogWalker> builder)
+        public void Configure(EntityTypeBuilder<Walker> builder)
         {
          
         }

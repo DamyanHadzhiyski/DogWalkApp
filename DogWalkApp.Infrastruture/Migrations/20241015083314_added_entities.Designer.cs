@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DogWalkApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240401153552_AddedEnitities")]
-    partial class AddedEnitities
+    [Migration("20241015083314_added_entities")]
+    partial class added_entities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.28")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -142,9 +142,6 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("datetime2")
                         .HasComment("Dog's birth date");
@@ -179,8 +176,6 @@ namespace DogWalkApp.Infrastructure.Migrations
                         .HasComment("Dog's weight range primary identifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("OwnerId");
 
@@ -219,8 +214,9 @@ namespace DogWalkApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("MaxDogsToWalk")
-                        .HasColumnType("int");
+                    b.Property<int>("MaxNumberOfDogs")
+                        .HasColumnType("int")
+                        .HasComment("Maximum number of dogs that the walker can handle");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -407,14 +403,10 @@ namespace DogWalkApp.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.Dog", b =>
                 {
-                    b.HasOne("DogWalkApp.Infrastructure.Data.Models.ApplicationUser", null)
-                        .WithMany("Dogs")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("DogWalkApp.Infrastructure.Data.Models.DogOwner", "Owner")
                         .WithMany("Dogs")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DogWalkApp.Infrastructure.Data.Models.WeightRange", "Weight")
@@ -453,7 +445,7 @@ namespace DogWalkApp.Infrastructure.Migrations
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.WeightRange", b =>
                 {
                     b.HasOne("DogWalkApp.Infrastructure.Data.Models.DogWalker", null)
-                        .WithMany("AcceptableWeightRanges")
+                        .WithMany("WeightRangesLimits")
                         .HasForeignKey("DogWalkerId");
                 });
 
@@ -508,11 +500,6 @@ namespace DogWalkApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Dogs");
-                });
-
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogOwner", b =>
                 {
                     b.Navigation("Dogs");
@@ -520,7 +507,7 @@ namespace DogWalkApp.Infrastructure.Migrations
 
             modelBuilder.Entity("DogWalkApp.Infrastructure.Data.Models.DogWalker", b =>
                 {
-                    b.Navigation("AcceptableWeightRanges");
+                    b.Navigation("WeightRangesLimits");
                 });
 #pragma warning restore 612, 618
         }

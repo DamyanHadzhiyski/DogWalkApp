@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DogWalkApp.Infrastructure.Migrations
 {
-    public partial class AddedEnitities : Migration
+    public partial class added_entities : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,8 +82,8 @@ namespace DogWalkApp.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false, comment: "Primary identifier of the dog walker")
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MaxDogsToWalk = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Primary identifier of the user")
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Primary identifier of the user"),
+                    MaxNumberOfDogs = table.Column<int>(type: "int", nullable: false, comment: "Maximum number of dogs that the walker can handle")
                 },
                 constraints: table =>
                 {
@@ -127,8 +127,7 @@ namespace DogWalkApp.Infrastructure.Migrations
                     Sex = table.Column<int>(type: "int", nullable: false, comment: "Dog's sex - male/female"),
                     WeightRangeId = table.Column<int>(type: "int", nullable: false, comment: "Dog's weight range primary identifier"),
                     SpecialNotes = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Special needs of the dog"),
-                    OwnerId = table.Column<int>(type: "int", nullable: false, comment: "Dog's owner primary identifier"),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    OwnerId = table.Column<int>(type: "int", nullable: false, comment: "Dog's owner primary identifier")
                 },
                 constraints: table =>
                 {
@@ -138,7 +137,7 @@ namespace DogWalkApp.Infrastructure.Migrations
                         column: x => x.OwnerId,
                         principalTable: "DogOwners",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Dogs_WeightRanges_WeightRangeId",
                         column: x => x.WeightRangeId,
@@ -183,7 +182,7 @@ namespace DogWalkApp.Infrastructure.Migrations
                 column: "CityId",
                 principalTable: "Cities",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
