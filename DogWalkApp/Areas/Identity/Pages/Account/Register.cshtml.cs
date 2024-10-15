@@ -87,43 +87,31 @@ namespace DogWalkApp.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            if (ModelState.IsValid)
-            {
-                var user = CreateUser();
+            //if (ModelState.IsValid)
+            //{
+            //    var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+            //    await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
+            //    var result = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User created a new account with password.");
+            //    if (result.Succeeded)
+            //    {
+            //        _logger.LogInformation("User created a new account with password.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
+            //        await _signInManager.SignInAsync(user, isPersistent: false);
+            //        return LocalRedirect(returnUrl);
+            //    }
+            //    foreach (var error in result.Errors)
+            //    {
+            //        ModelState.AddModelError(string.Empty, error.Description);
+            //    }
+            //}
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
 
-        private ApplicationUser CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<ApplicationUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
-        }
+
     }
 }

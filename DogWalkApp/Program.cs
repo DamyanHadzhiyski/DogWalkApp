@@ -1,11 +1,14 @@
+using DogWalkApp.Core.Contracts;
+using DogWalkApp.Core.Services;
 using DogWalkApp.Infrastructure.Data;
 using DogWalkApp.Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IAccountService, AccountService>();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
